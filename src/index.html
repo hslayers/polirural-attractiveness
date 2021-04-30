@@ -9,12 +9,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
-    <% } %>
+  <% } %>
 </head>
 <body >
-    <div hs ng-app="hs" ng-controller="Main" style="height: 100vh;"></div>
-    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-      <script type="application/javascript" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
-    <% } %>
+  <hs ng-app="hs" ng-controller="Main" style="height: 100vh;"></hs>
+  <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script type="application/javascript" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+  <% } %>
 </body>
 </html>

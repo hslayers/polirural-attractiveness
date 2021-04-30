@@ -12,31 +12,28 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const hslPaths = require(path.join(__dirname, '../node_modules/hslayers-ng/common_paths'));
-
 
 module.exports = {
-  entry: { main: 'app.js' },
+  entry: { main: 'src/app.js' },
   output: {
-    // Path where bundled files will be output
-    path: path.resolve(__dirname, '../static'),
     // Path at which output assets will be served
     publicPath: ''
   },
   // Just for build speed improvement
   resolve: { symlinks: true,
     modules: [
-      path.join(__dirname),
-      path.join(__dirname, "../node_modules"),
-      path.resolve(path.join(__dirname, "../node_modules", "hslayers-ng"))
-    ].concat(hslPaths.paths)},
+      __dirname,
+      path.resolve(path.join(__dirname, "./node_modules")),
+      path.resolve(path.join(__dirname, "./node_modules", "hslayers-ng"))
+    ]
+  },
   plugins: [
     // Clean before build
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       // Path where the file will be generated (appended to output.path)
       filename: 'index.html',
-      template: 'src/index.html',
+      template: './src/index.html',
       // We manually inject css and js files in our template
       inject: false
       // favicon: 'assets/img/favicon.ico'
@@ -49,7 +46,7 @@ module.exports = {
       // or commented with /**@ngInject */
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!(hslayers-ng)\/).*/,
         use: [
           {
             loader: 'babel-loader',

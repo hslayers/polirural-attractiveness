@@ -10,7 +10,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const path = require('path');
-const webpack = require('webpack');
 const env = process.env;
 
 module.exports = merge(common, {
@@ -31,6 +30,8 @@ module.exports = merge(common, {
     splitChunks: false
   },
   output: {
+    // Path where bundled files will be output
+    path: path.resolve(__dirname, './static'),
     // see https://webpack.js.org/guides/build-performance#output-without-path-info
     pathinfo: false,
     filename: '[name].bundle.js'
@@ -39,7 +40,7 @@ module.exports = merge(common, {
     contentBase: './static',
     hot: false,
     host: '0.0.0.0',
-    port: env.HTTP_PORT || 8082
+    port: env.HTTP_PORT || 8080
   },
   module: {
     rules: [
@@ -61,7 +62,7 @@ module.exports = merge(common, {
       // Load angularJS partials HTML file as URL
       {
         test: /\.html$/,
-        exclude: path.resolve(__dirname, '../src/index.html'),
+        exclude: path.resolve(__dirname, './src/index.html'),
         use: [
           'ng-cache-loader?prefix=[dir]/[dir]',
           'extract-loader',
@@ -83,7 +84,7 @@ module.exports = merge(common, {
       {
         type: 'javascript/auto',
         test: /\.json$/,
-        include: path.resolve(__dirname, 'assets/locales'),
+        include: path.resolve(__dirname, './src/assets/locales'),
         use: [
           {
             loader: 'file-loader',

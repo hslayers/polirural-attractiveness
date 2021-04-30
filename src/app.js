@@ -1,15 +1,17 @@
 'use strict';
-import 'toolbar.module';
-import 'print.module';
-import 'query.module';
-import 'search.module';
-import 'add-layers.module';
-import 'measure.module';
-import 'permalink.module';
-import 'info.module';
-import 'datasource-selector.module';
-import 'sidebar.module';
-import 'draw.module';
+import 'hslayers-ng/components/add-layers/add-layers.module';
+import 'hslayers-ng/components/core/core.module';
+import 'hslayers-ng/components/datasource-selector/datasource-selector.module';
+import 'hslayers-ng/components/info/info.module';
+import 'hslayers-ng/components/map/map.module';
+import 'hslayers-ng/components/measure/measure.module';
+import 'hslayers-ng/components/permalink/permalink.module';
+import 'hslayers-ng/components/print/print.module';
+import 'hslayers-ng/components/query/query.module';
+import 'hslayers-ng/components/search/search.module';
+import 'hslayers-ng/components/sidebar/sidebar.module';
+import 'hslayers-ng/components/toolbar/toolbar.module';
+// hslayers-ng components must be loaded first, otherwise angular will be undefined
 import View from 'ol/View';
 import { transform, transformExtent } from 'ol/proj';
 import { Tile, Group, Image as ImageLayer } from 'ol/layer';
@@ -17,25 +19,28 @@ import { TileWMS, WMTS, OSM, XYZ, TileArcGISRest } from 'ol/source';
 import { Style, Icon, Stroke, Fill, Circle, Text } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
 import './adjuster/adjuster.module';
-import nuts from 'nuts';
+import nuts from './nuts';
 
 var module = angular.module('hs', [
-    'hs.sidebar',
-    'hs.draw',
-    'hs.info',
-    'hs.toolbar',
-    'hs.layermanager',
-    'hs.query',
-    'hs.search', 'hs.print', 'hs.permalink',
-    'hs.geolocation',
-    'hs.datasource_selector',
-    'hs.save-map',
-    'hs.measure',
-    'hs.addLayers',
-    'pra.adjuster'
+  'hs.addLayers',
+  'hs.core',
+  'hs.datasource_selector',
+  'hs.geolocation',
+  'hs.info',
+  'hs.layermanager',
+  'hs.map',
+  'hs.measure',
+  'hs.permalink',
+  'hs.print',
+  'hs.query',
+  'hs.save-map',
+  'hs.search',
+  'hs.sidebar',
+  'hs.toolbar',
+  'pra.adjuster'
 ]);
 
-module.directive('hs', ['config', 'Core', function (config, Core) {
+module.directive('hs', ['HsConfig', 'HsCore', function (config, Core) {
     return {
         template: Core.hslayersNgTemplate,
         link: function (scope, element) {
@@ -107,7 +112,7 @@ nuts3Layer.set('hoveredKeys', ['NUTS_NAME', 'totalForHumans', "Social & Human", 
 nuts3Layer.set('hoveredKeysTranslations', {'NUTS_NAME': 'Name', 'totalForHumans': 'Calculated score'});
 
 
-module.value('config', {
+module.value('HsConfig', {
     proxyPrefix: "../8085/",
     default_layers: [
         new Tile({
@@ -152,7 +157,7 @@ module.value('config', {
     }
 });
 
-module.controller('Main', ['$scope', 'Core', '$compile', 'hs.layout.service', 'pra.adjuster.service',
+module.controller('Main', ['$scope', 'HsCore', '$compile', 'HsLayoutService', 'pra.adjuster.service',
     function ($scope, Core, $compile, layoutService, adjusterService) {
         $scope.Core = Core;
         $scope.panelVisible = layoutService.panelVisible;

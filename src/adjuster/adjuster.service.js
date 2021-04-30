@@ -1,7 +1,7 @@
 //import attractivity from '../Attractivity.json';
-import nuts from 'nuts';
+import nuts from '../nuts';
 
-export default ['Core', 'hs.utils.service', '$rootScope', '$http',
+export default ['HsCore', 'HsUtilsService', '$rootScope', '$http',
     function (Core, utils, $rootScope, $http) {
         var me = {
             factors: [
