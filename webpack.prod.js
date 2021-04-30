@@ -27,7 +27,7 @@ module.exports = merge(common, {
     // Add a chunkhash to file name so it will not be cached by browsers when content changed
     filename: '[name].[hash].bundle.js',
     // Path where bundled files will be output
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, './build'),
     // Path at which output assets will be served
     publicPath: ''
   },
@@ -103,7 +103,7 @@ module.exports = merge(common, {
       {
         test: /\.json$/,
         type: 'javascript/auto',
-        include: path.resolve(__dirname, 'assets/locales'),
+        include: path.resolve(__dirname, 'src/assets/locales'),
         use: [
           {
             loader: 'file-loader',
@@ -117,7 +117,7 @@ module.exports = merge(common, {
       // AngularJS templates are cached using cache template
       {
         test: /\.html$/,
-        exclude: path.resolve(__dirname, '../src/index.html'),
+        exclude: path.resolve(__dirname, './src/index.html'),
         use: [
           'ng-cache-loader?prefix=[dir]/[dir]',
           'extract-loader',

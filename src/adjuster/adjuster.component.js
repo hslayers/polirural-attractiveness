@@ -1,6 +1,6 @@
 export default {
     template: require('./adjuster.directive.html'),
-    controller: ['$scope', 'hs.map.service', 'Core', 'config', 'pra.adjuster.service', 'hs.utils.service',
+    controller: ['$scope', 'HsMapService', 'HsCore', 'HsConfig', 'pra.adjuster.service', 'HsUtilsService',
         function ($scope, OlMap, Core, config, adjusterService, utils) {
             $scope.loading = false;
             $scope.utils = utils;

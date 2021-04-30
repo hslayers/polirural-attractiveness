@@ -5,9 +5,10 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && node_modules/.bin/webpack --config src/webpack.prod.js",
-    "build-dev": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && node_modules/.bin/webpack --config src/webpack.dev.js --progress",
-    "start": "node_modules/.bin/http-server ./dist -p 8080 ."
+    "build": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && webpack --config webpack.prod.js",
+    "build-dev": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && webpack --config webpack.dev.js --progress",
+    "start": "npx http-server ./build -p 8080 .",
+    "start-dev": "webpack-dev-server --config ./webpack.dev.js --progress --watch"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,11 @@
     "attractiveness"
   ],
   "author": "Raitis Bērziņš",
+  "contributors": ["Jan Macura"],
   "license": "MIT",
   "dependencies": {
     "csvtojson": "^2.0.10",
-    "hslayers-ng": "^1.14.0",
+    "hslayers-ng": "^1.27.4",
     "http-server": "^0.12.1"
   },
   "devDependencies": {
