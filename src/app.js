@@ -154,14 +154,15 @@ module.value('HsConfig', {
     }, 
     searchProvider: (q) => {
         return `/app/jupyter-test/8085/search/?q=${q}`
-    }
+    },
+    sidebarPosition: 'right',
 });
 
 module.controller('Main', ['$scope', 'HsCore', '$compile', 'HsLayoutService', 'pra.adjuster.service',
     function ($scope, Core, $compile, layoutService, adjusterService) {
         $scope.Core = Core;
         $scope.panelVisible = layoutService.panelVisible;
-        layoutService.sidebarRight = false;
+        //layoutService.sidebarRight = true;
         //layoutService.sidebarToggleable = false;
         Core.singleDatasources = true;
         layoutService.sidebarButtons = true;
