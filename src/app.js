@@ -158,25 +158,34 @@ module.value('HsConfig', {
     sidebarPosition: 'right',
 });
 
-module.controller('Main', ['$scope', 'HsCore', '$compile', 'HsLayoutService', 'pra.adjuster.service',
-    function ($scope, Core, $compile, layoutService, adjusterService) {
+module.controller('Main', ['$scope', 'HsCore', '$compile', 'HsLayoutService', 'HsSidebarService', 'pra.adjuster.service',
+    function ($scope, Core, $compile, layoutService, hsSidebarService, adjusterService) {
         $scope.Core = Core;
         $scope.panelVisible = layoutService.panelVisible;
         //layoutService.sidebarRight = true;
         //layoutService.sidebarToggleable = false;
-        Core.singleDatasources = true;
+        //Core.singleDatasources = true;
         layoutService.sidebarButtons = true;
-        layoutService.setDefaultPanel('adjuster');
+        hsSidebarService.buttons.push({
+          panel: 'adjuster',
+          module: 'pra.adjuster',
+          order: 0,
+          title: 'Adjust factors',
+          description: 'Adjust factors for computation',
+          icon: 'icon-analytics-piechart',
+          //visible: true
+        });
         $scope.$on("scope_loaded", function (event, args) {
-            if (args == 'Sidebar') {
-                var el = angular.element('<pra.adjuster hs.draggable ng-if="Core.exists(\'pra.adjuster\')" ng-show="panelVisible(\'adjuster\', this)"></pra.adjuster>')[0];
-                layoutService.panelListElement.appendChild(el);
-                $compile(el)($scope);
+          if (args == 'Sidebar') {
+            var el = angular.element('<pra.adjuster hs.draggable ng-if="Core.exists(\'pra.adjuster\')" ng-show="panelVisible(\'adjuster\', this)"></pra.adjuster>')[0];
+            layoutService.panelListElement.appendChild(el);
+            $compile(el)($scope);
+            layoutService.setDefaultPanel('adjuster');
 
-                var toolbar_button = angular.element('<div pra.adjuster.sidebar-btn></div>')[0];
-                layoutService.sidebarListElement.appendChild(toolbar_button);
-                $compile(toolbar_button)(event.targetScope);
-            }
+            //var toolbar_button = angular.element('<div pra.adjuster.sidebar-btn></div>')[0];
+            //layoutService.sidebarListElement.appendChild(toolbar_button);
+            //$compile(toolbar_button)(event.targetScope);
+          }
         })
     }
 ]);
