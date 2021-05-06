@@ -62,14 +62,19 @@ export default ['HsCore', 'HsUtilsService', '$rootScope', '$http',
                             a.aggregate *= normalizer;
                         })
                         me.attractivity.forEach(a => {
-                            me.nutsCodeRecordRelations[a.code] = a;
+                            me.nutsCodeRecordRelations[a.code.toUpperCase()] = a;
                         })
                         nuts.nuts3Source.forEachFeature(feature => {
+                          const regionData = me.nutsCodeRecordRelations[feature.get('NUTS_ID').toUpperCase()];
+                          if (regionData) {
                             feature.set('total', me.nutsCodeRecordRelations[feature.get('NUTS_ID')].aggregate);
                             feature.set('totalForHumans', (me.nutsCodeRecordRelations[feature.get('NUTS_ID')].aggregate * 100).toFixed(2));
                             me.factors.forEach(factor => {
-                                feature.set(factor.factor, (me.nutsCodeRecordRelations[feature.get('NUTS_ID')][factor.factor] * 100).toFixed(2))
+                              feature.set(factor.factor, (me.nutsCodeRecordRelations[feature.get('NUTS_ID')][factor.factor] * 100).toFixed(2))
                             })
+                          } else {
+                            console.log(`No data for ${feature.get('NUTS_ID').toUpperCase()}`);
+                          }
                         })
                     })
 
